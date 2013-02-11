@@ -5,7 +5,7 @@
 
 Name: phantom
 Version: 0.14.0
-Release: pre44%{dist}
+Release: pre44.1%{dist}
 
 Summary: I/O engine for yandex loadtesting environment
 License: LGPL 2.1
@@ -42,8 +42,12 @@ install -m755 lib/phantom/*.so %{buildroot}/usr/lib64/phantom/
 rm -rf $RPM_BUILD_ROOT
 
 %post
+if [ ! -e /usr/lib/phantom ] ; then
+	ln -sf /usr/lib64/phantom/ /usr/lib/
+fi
 
 %preun
+rm -f /usr/lib/phantom
 
 %files
 %defattr(-,root,root)
